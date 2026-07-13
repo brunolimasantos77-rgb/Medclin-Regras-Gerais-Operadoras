@@ -333,12 +333,8 @@ function extraIndices(header){
   return {
     status: findRe(/\bSTATUS\b/),
     ans: findRe(/\bANS\b/),
-    remocao: find(h=>h.indexOf("REMOCAO")>=0 && h.indexOf("PSIQ")<0),
-    remocaoPsiq: find(h=>h.indexOf("PSIQ")>=0),
     servicos: find(h=>h.indexOf("SERVICOS")>=0 && h.indexOf("CONTRAT")>=0),
-    prazoUrg: find(h=>h.indexOf("URGENCIA")>=0),
-    abramge: find(h=>h.indexOf("ABRAMGE")>=0),
-    medicacaoPA: find(h=>h.indexOf("MEDICACAO")>=0)
+    abramge: find(h=>h.indexOf("ABRAMGE")>=0)
   };
 }
 
@@ -364,12 +360,8 @@ function finalize(dataRows,ex){
     // colunas novas (localizadas pelo nome do cabecalho)
     o.status      = (ex&&ex.status>=0)?clean(raw[ex.status]):"";
     o.ans         = (ex&&ex.ans>=0)?clean(raw[ex.ans]):"";
-    o.remocao     = (ex&&ex.remocao>=0)?clean(raw[ex.remocao]):"";
-    o.remocaoPsiq = (ex&&ex.remocaoPsiq>=0)?clean(raw[ex.remocaoPsiq]):"";
     o.servicos    = (ex&&ex.servicos>=0)?clean(raw[ex.servicos]):"";
-    o.prazoUrg    = (ex&&ex.prazoUrg>=0)?clean(raw[ex.prazoUrg]):"";
     o.abramge     = (ex&&ex.abramge>=0)?clean(raw[ex.abramge]):"";
-    o.medicacaoPA = (ex&&ex.medicacaoPA>=0)?clean(raw[ex.medicacaoPA]):"";
     out.push(o);
   });
   return out;
@@ -606,10 +598,6 @@ function openDetail(o){
   const secRec=section("Recepção",false,svgUser(),[
     ["Documentos Obrigatórios para atendimento",o.documentos],
     ["Serviços contratados",o.servicos],
-    ["Remoção",o.remocao],
-    ["Regulação Psiquiátrica",o.remocaoPsiq],
-    ["Urgência/Emergência Prazo de solicitação",o.prazoUrg],
-    ["Medicação em PA",o.medicacaoPA],
     ["Site da Operadora",o.site||o.logoLink],
     ["Portal de Elegibilidade",o.portal],
     ["Contatos (e-mail)",o.contatos]
@@ -703,7 +691,7 @@ el("sort").addEventListener("change",renderGrid);
 document.querySelectorAll(".vtab").forEach(b=>b.addEventListener("click",()=>setView(b.getAttribute("data-view"))));
 
 // Pasta da rede: mostra o caminho e copia para a area de transferencia (colar no Explorador)
-const PASTA_COMERCIAL="\\\\fileserver\\CAMINHO\\DA\\PASTA\\MEDCLIN"; // ajuste para a pasta de rede da Medclin
+const PASTA_COMERCIAL="\\\\fileserver\\usuarios\\antigo\\Comercial compartilhamento\\- MEDCLIN";
 (function(){
   var pEl=el("folder-path"); if(pEl)pEl.textContent=PASTA_COMERCIAL;
   var btn=el("copy-folder"); if(!btn)return;
