@@ -334,7 +334,8 @@ function extraIndices(header){
     status: findRe(/\bSTATUS\b/),
     ans: findRe(/\bANS\b/),
     servicos: find(h=>h.indexOf("SERVICOS")>=0 && h.indexOf("CONTRAT")>=0),
-    abramge: find(h=>h.indexOf("ABRAMGE")>=0)
+    abramge: find(h=>h.indexOf("ABRAMGE")>=0),
+    credenciado: findRe(/\bCREDENCIADO\b/)
   };
 }
 
@@ -362,6 +363,7 @@ function finalize(dataRows,ex){
     o.ans         = (ex&&ex.ans>=0)?clean(raw[ex.ans]):"";
     o.servicos    = (ex&&ex.servicos>=0)?clean(raw[ex.servicos]):"";
     o.abramge     = (ex&&ex.abramge>=0)?clean(raw[ex.abramge]):"";
+    o.credenciado = (ex&&ex.credenciado>=0)?clean(raw[ex.credenciado]):"";
     out.push(o);
   });
   return out;
@@ -598,6 +600,7 @@ function openDetail(o){
   const secRec=section("Recepção",false,svgUser(),[
     ["Documentos Obrigatórios para atendimento",o.documentos],
     ["Serviços contratados",o.servicos],
+    ["Credenciado",o.credenciado],
     ["Site da Operadora",o.site||o.logoLink],
     ["Portal de Elegibilidade",o.portal],
     ["Contatos (e-mail)",o.contatos]
